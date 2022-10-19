@@ -34,5 +34,30 @@ describe "Merchants API" do
     id = create(:merchant).id
 
     get "/api/v1/merchants/#{id}"
+
+    merchant_data = JSON.parse(response.body, symbolize_names: true)
+    
+    merchant = merchant_data[:data]
+
+    expect(merchant).to have_key(:id)
+    expect(merchant[:id].to_i).to eq(id)
+   
+    expect(merchant[:type]).to be_a(String)
+    expect(merchant[:type]).to eq("merchant")
+
+    expect(merchant).to have_key(:attributes)
+    expect(merchant[:attributes]).to be_a(Hash)
+    expect(merchant[:attributes]).to have_key(:name)
+    expect(merchant[:attributes][:name]).to be_a(String)
   end
+
+  xit 'returns a 404 error for a non existent merchant id' do
+    id = create(:merchant, id: 8).id
+
+    get "/api/v1/merchants/9"
+
+    expect(response).to_not be_successful
+    expect(response).to have_http_status(404)
+  end
+
 end
