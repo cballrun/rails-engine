@@ -10,7 +10,8 @@ describe "Items Merchant API" do
 
     get "/api/v1/items/#{m1_item.id}/merchants/#{merch_1.id}"
     
-    # merch_item_data = JSON.parse(response.body, symbolize_names: true)
+    merch_data = JSON.parse(response.body, symbolize_names: true)
+    # binding.pry
 
     # m1_items_data = merch_items_data[:data]
 
