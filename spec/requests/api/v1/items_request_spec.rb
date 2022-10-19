@@ -31,10 +31,11 @@ describe "Items API" do
       expect(item[:attributes]).to have_key(:name)
       expect(item[:attributes][:name]).to be_a(String)
       expect(item[:attributes][:unit_price]).to be_a(Float)
+      expect(item[:attributes]).to have_key(:merchant_id)
     end
   end
 
-  xit 'can get one item by its id' do
+  it 'can get one item by its id' do
     id = create(:item).id
 
     get "/api/v1/items/#{id}"
@@ -53,6 +54,8 @@ describe "Items API" do
     expect(item[:attributes]).to be_a(Hash)
     expect(item[:attributes]).to have_key(:name)
     expect(item[:attributes][:name]).to be_a(String)
+    expect(item[:attributes][:unit_price]).to be_a(Float)
+    expect(item[:attributes]).to have_key(:merchant_id)
   end
 
   xit 'returns a 404 error for a non existent item id' do
@@ -62,6 +65,21 @@ describe "Items API" do
 
     expect(response).to_not be_successful
     expect(response).to have_http_status(404)
+  end
+
+  it 'can create a new item' do
+    merchant = create(:merchant)
+    item_params = ({
+      name: "Plumbus",
+      description: "A plain old plumbus",
+      unit_price: 384.04,
+      merchant_id: merchant.id
+    })
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/items", headers: headers, params: JSON.generate(item: item_params)
+
+    expect(response).to be_successful
   end
 
 end
