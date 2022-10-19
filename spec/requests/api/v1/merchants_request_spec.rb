@@ -60,4 +60,13 @@ describe "Merchants API" do
     expect(response).to have_http_status(404)
   end
 
+  it 'can get all of one merchants items' do
+    merch_1 = create(:merchant)
+    merch_2 = create(:merchant)
+
+    m1_items = create_list(:item, 5, merchant: merch_1)
+    m2_items = create_list(:item, 5, merchant: merch_2)
+    
+  end
+
 end
