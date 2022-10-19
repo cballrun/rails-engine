@@ -29,5 +29,4 @@ describe "Merchant Items API" do
       expect(item[:attributes][:merchant_id]).to eq(merch_1.id)
     end
   end
-
-  end
+end
