@@ -13,12 +13,15 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def destroy
-  
     render json: Item.delete(params[:id])
+  end
+
+  def update
+    render json: Item.update(params[:id], item_params)
   end
 
   private
     def item_params
-      params.require(:item).permit(:id, :name, :description, :unit_price, :merchant_id)
+      params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
     end
 end
