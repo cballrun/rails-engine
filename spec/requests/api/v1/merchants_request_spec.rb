@@ -66,12 +66,17 @@ describe "Merchants API" do
     m3 = create(:merchant, name: "Bubbles")
     m4 = create(:merchant, name: "Ring World")
     m5 = create(:merchant, name: "Turing School")
+    m6 = create(:merchant, name: "Ring Yorld")
+    m7 = create(:merchant, name: "Ring Zorld")
     
     get "/api/v1/merchants/find?name=ring"
 
-    # merchant_data = JSON.parse(response.body, symbolize_names: true)
+    merchant_data = JSON.parse(response.body, symbolize_names: true)
 
+    merchant = merchant_data[:data]
 
+    expect(merchant[:id]).to eq(m4.id)
+    expect(merchant[:attributes][:name]).to eq("Ring World")
   end
 
 end
