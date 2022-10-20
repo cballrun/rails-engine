@@ -20,8 +20,8 @@ class Api::V1::ItemsController < ApplicationController
     render json: ItemSerializer.new(Item.update(params[:id], item_params))
   end
 
-  def self.find_all_by_name(query)
-    where("name ILIKE ?", "%#{query}%")
+  def find_all
+    render json: ItemSerializer.new(Item.find_all_by_name(params[:name]))
   end
 
   private

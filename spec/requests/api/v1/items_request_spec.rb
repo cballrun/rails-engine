@@ -116,13 +116,30 @@ describe "Items API" do
   end
 
   it 'can find all items in a search by name' do
-    i1 = create(:item, name: "Titanium Ring")
-    i2 = create(:item, name: "Ring Pop")
-    i3 = create(:item, name: "Suffering")
+    merch = create(:merchant)
+    
+    i1 = create(:item, name: "Titanium Ring", merchant: merch)
+    i2 = create(:item, name: "Ring Pop", merchant: merch)
+    i3 = create(:item, name: "Suffering", merchant: merch)
     i4 = create(:item, name: "Cheese")
     i5 = create(:item, name: "Goldfish")
 
     get "/api/v1/items/find_all?name=ring"
+
+    items_data = JSON.parse(response.body, symbolize_names: true)
+
+    items = items_data[:data]
+    
+    expect(items.count).to eq(3)
+
+    items.each do |item|
+      expect(item[:id].to_i).to be_a(Integer)
+      expect(item[:type]).to eq("item")
+      expect(item[:attributes][:description]).to be_a(String)
+      expect(item[:attributes][:unit_price]).to be_a(Float)
+      expect(item[:attributes][:merchant_id]).to eq(merch.id)
+    end
+
   end
 
 end
