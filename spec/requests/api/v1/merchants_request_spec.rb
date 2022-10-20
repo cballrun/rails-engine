@@ -60,4 +60,9 @@ describe "Merchants API" do
     expect(response).to have_http_status(404)
   end
 
+  it "finds one merchant in a search" do
+
+    get "/api/v1/merchants/find"
+  end
+
 end
