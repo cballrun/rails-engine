@@ -60,4 +60,23 @@ describe "Merchants API" do
     expect(response).to have_http_status(404)
   end
 
+  it "finds one merchant in a search" do
+    m1 = create(:merchant, name: "Randy")
+    m2 = create(:merchant, name: "Julian")
+    m3 = create(:merchant, name: "Bubbles")
+    m4 = create(:merchant, name: "Ring World")
+    m5 = create(:merchant, name: "Turing School")
+    m6 = create(:merchant, name: "Ring Yorld")
+    m7 = create(:merchant, name: "Ring Zorld")
+    
+    get "/api/v1/merchants/find?name=ring"
+
+    merchant_data = JSON.parse(response.body, symbolize_names: true)
+
+    merchant = merchant_data[:data]
+
+    expect(merchant[:id].to_i).to eq(m4.id)
+    expect(merchant[:attributes][:name]).to eq("Ring World")
+  end
+
 end
