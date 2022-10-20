@@ -149,6 +149,39 @@ describe "Items API" do
     i5 = create(:item, name: "Goldfish", unit_price: 383.45)
 
     get "/api/v1/items/find_all?min_price=50.55"
+
+    items_data = JSON.parse(response.body, symbolize_names: true)
+
+    items = items_data[:data]
+
+    expect(items.count).to eq(2)
+
+    items.each do |item|
+      expect(item[:id].to_i).to be_a(Integer)
+      expect(item[:type]).to eq("item")
+      expect(item[:attributes][:description]).to be_a(String)
+    end
   end
 
+  it 'can find items in a search equal to or below a minimum price' do
+    i1 = create(:item, name: "Titanium Ring", unit_price: 51.0)
+    i2 = create(:item, name: "Ring Pop", unit_price: 50.55)
+    i3 = create(:item, name: "Suffering", unit_price: 48.00)
+    i4 = create(:item, name: "Cheese", unit_price: 125)
+    i5 = create(:item, name: "Goldfish", unit_price: 383.45)
+  
+    get "/api/v1/items/find_all?max_price=50.55"
+  
+    items_data = JSON.parse(response.body, symbolize_names: true)
+  
+    items = items_data[:data]
+  
+    expect(items.count).to eq(4)
+  
+    items.each do |item|
+      expect(item[:id].to_i).to be_a(Integer)
+      expect(item[:type]).to eq("item")
+      expect(item[:attributes][:description]).to be_a(String)
+    end
+  end
 end
