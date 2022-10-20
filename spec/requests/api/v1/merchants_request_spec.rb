@@ -61,8 +61,17 @@ describe "Merchants API" do
   end
 
   it "finds one merchant in a search" do
+    m1 = create(:merchant, name: "Randy")
+    m2 = create(:merchant, name: "Julian")
+    m3 = create(:merchant, name: "Bubbles")
+    m4 = create(:merchant, name: "Ring World")
+    m5 = create(:merchant, name: "Turing School")
+    
+    get "/api/v1/merchants/find?name=ring"
 
-    get "/api/v1/merchants/find"
+    # merchant_data = JSON.parse(response.body, symbolize_names: true)
+
+
   end
 
 end

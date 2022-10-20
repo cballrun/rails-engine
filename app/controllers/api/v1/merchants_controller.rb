@@ -9,7 +9,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def find
-    
+
   end
 
 end
