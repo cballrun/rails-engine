@@ -75,7 +75,7 @@ describe "Merchants API" do
 
     merchant = merchant_data[:data]
 
-    expect(merchant[:id]).to eq(m4.id)
+    expect(merchant[:id].to_i).to eq(m4.id)
     expect(merchant[:attributes][:name]).to eq("Ring World")
   end
 

@@ -21,9 +21,10 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def find_all
-    binding.pry
     if params[:name]
       render json: ItemSerializer.new(Item.find_all_by_name(params[:name]))
+    elsif params[:max_price] && params[:min_price]
+      render json: ItemSerializer.new(Item.find_by_price_range(params[:min_price], params[:max_price]))
     elsif params[:min_price]
       render json: ItemSerializer.new(Item.find_by_min_price(params[:min_price]))
     elsif params[:max_price]

@@ -154,7 +154,7 @@ describe "Items API" do
 
     items = items_data[:data]
 
-    expect(items.count).to eq(2)
+    expect(items.count).to eq(4)
 
     items.each do |item|
       expect(item[:id].to_i).to be_a(Integer)
@@ -176,7 +176,7 @@ describe "Items API" do
   
     items = items_data[:data]
   
-    expect(items.count).to eq(4)
+    expect(items.count).to eq(2)
   
     items.each do |item|
       expect(item[:id].to_i).to be_a(Integer)
@@ -191,14 +191,15 @@ describe "Items API" do
     i3 = create(:item, name: "Suffering", unit_price: 48.00)
     i4 = create(:item, name: "Cheese", unit_price: 125)
     i5 = create(:item, name: "Goldfish", unit_price: 383.45)
+    i6 = create(:item, name: "Cup", unit_price: 124.55)
 
-    get "/api/v1/items/find_all?max_price=125&min_price=50.55"
+    get "/api/v1/items/find_all?max_price=125.50&min_price=50.56"
 
     items_data = JSON.parse(response.body, symbolize_names: true)
 
     items = items_data[:data]
-
-    expect(items.count).to eq(2)
+    binding.pry
+    expect(items.count).to eq(3)
 
     items.each do |item|
       expect(item[:id].to_i).to be_a(Integer)
