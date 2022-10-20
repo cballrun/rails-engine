@@ -198,7 +198,7 @@ describe "Items API" do
     items_data = JSON.parse(response.body, symbolize_names: true)
 
     items = items_data[:data]
-    binding.pry
+    
     expect(items.count).to eq(3)
 
     items.each do |item|
