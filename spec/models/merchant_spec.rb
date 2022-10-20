@@ -17,7 +17,7 @@ RSpec.describe Merchant, type: :model do
       m4 = create(:merchant, name: "Ring World")
       m5 = create(:merchant, name: "Turing School")
 
-      binding.pry
+      
       expect(Merchant.find_one("ring")).to eq("Ring World")
     end
   end
