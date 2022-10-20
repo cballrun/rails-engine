@@ -34,10 +34,11 @@ RSpec.describe Item, type: :model do
       i4 = create(:item, name: "Cheese", unit_price: 125)
       i5 = create(:item, name: "Goldfish", unit_price: 383.45)
 
-      expect(Item.find_by_min_price(50.55).count).to eq(2)
+      expect(Item.find_by_min_price(50.55).count).to eq(4)
       expect(Item.find_by_min_price(50.55)).to include(i2)
-      expect(Item.find_by_min_price(50.55)).to include(i3)
-      expect(Item.find_by_min_price(50.55)).to_not include(i5)
+      expect(Item.find_by_min_price(50.55)).to_not include(i3)
+      expect(Item.find_by_min_price(50.55)).to include(i5)
+      expect(Item.find_by_min_price(50.55)).to include(i4)
     end
 
 
@@ -48,12 +49,29 @@ RSpec.describe Item, type: :model do
       i4 = create(:item, name: "Cheese", unit_price: 125)
       i5 = create(:item, name: "Goldfish", unit_price: 383.45)
 
-      expect(Item.find_by_max_price(50.55).count).to eq(4)
+      expect(Item.find_by_max_price(50.55).count).to eq(2)
       expect(Item.find_by_max_price(50.55)).to include(i2)
-      expect(Item.find_by_max_price(50.55)).to_not include(i3)
-      expect(Item.find_by_max_price(50.55)).to include(i5)
-      expect(Item.find_by_max_price(50.55)).to include(i4)
+      expect(Item.find_by_max_price(50.55)).to include(i3)
+      expect(Item.find_by_max_price(50.55)).to_not include(i5)
     end
+
+
+    it 'can find all items in price range' do
+      i1 = create(:item, name: "Titanium Ring", unit_price: 51.0)
+      i2 = create(:item, name: "Ring Pop", unit_price: 50.55)
+      i3 = create(:item, name: "Suffering", unit_price: 48.00)
+      i4 = create(:item, name: "Cheese", unit_price: 125)
+      i5 = create(:item, name: "Goldfish", unit_price: 383.45)
+      i6 = create(:item, name: "Cup", unit_price: 124.55)
+  
+
+      expect(Item.find_by_price_range(50.56, 125.50).count).to eq(3)
+      expect(Item.find_by_price_range(50.56, 125.50)).to include(i1)
+      expect(Item.find_by_price_range(50.56, 125.50)).to include(i4)
+      expect(Item.find_by_price_range(50.56, 125.50)).to include(i6)
+    end
+
+
   end
 
 

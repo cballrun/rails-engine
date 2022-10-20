@@ -10,11 +10,15 @@ class Item < ApplicationRecord
     where("name ILIKE ?", "%#{query}%")
   end
 
-  def self.find_by_min_price(minprice)
-    where("unit_price <= ?", minprice)
+  def self.find_by_max_price(maxprice)
+    where("unit_price <= ?", maxprice)
   end
 
-  def self.find_by_max_price(maxprice)
-    where("unit_price >= ?", maxprice)
+  def self.find_by_min_price(minprice)
+    where("unit_price >= ?", minprice)
+  end
+
+  def self.find_by_price_range(minprice, maxprice)
+    where(unit_price: minprice..maxprice)
   end
 end

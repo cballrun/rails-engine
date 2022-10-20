@@ -21,6 +21,7 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def find_all
+    binding.pry
     if params[:name]
       render json: ItemSerializer.new(Item.find_all_by_name(params[:name]))
     elsif params[:min_price]
