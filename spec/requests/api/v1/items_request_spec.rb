@@ -58,15 +58,6 @@ describe "Items API" do
     expect(item[:attributes]).to have_key(:merchant_id)
   end
 
-  xit 'returns a 404 error for a non existent item id' do
-    id = create(:item, id: 8).id
-
-    get "/api/v1/items/9"
-
-    expect(response).to_not be_successful
-    expect(response).to have_http_status(404)
-  end
-
   it 'can create a new item' do
     merchant = create(:merchant)
     item_params = ({
@@ -205,6 +196,51 @@ describe "Items API" do
       expect(item[:id].to_i).to be_a(Integer)
       expect(item[:type]).to eq("item")
       expect(item[:attributes][:description]).to be_a(String)
+    end
+  end
+
+  describe 'sad path' do
+    context 'item show' do
+      it 'returns a 404 error for a non existent item id' do
+        id = create(:item, id: 8).id
+
+        get "/api/v1/items/9"
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(404)
+      end
+    end
+
+    context 'item update' do
+      xit 'returns a 404 for a non existent item id' do
+        item = create(:item)
+        # binding.pry
+        item_params = { name: "Plumbus" }
+        headers = {"CONTENT_TYPE" => "application/json"}
+        new_id = item.id + 15
+      
+        patch "/api/v1/items/#{new_id}", headers: headers, params: JSON.generate({item: item_params})
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(404)
+        expect(Item.last.name).to eq(item.name)
+      end
+
+      xit 'returns a 404 for a non existent merchant id' do
+        merch = create(:merchant, id: 58)
+        item = create(:item, merchant: merch)
+        item_params = { name: "Plumbus" }
+       
+        item.merchant_id = merch.id + 100
+       
+        headers = {"CONTENT_TYPE" => "application/json"}
+        
+        patch "/api/v1/items/#{item.id}", headers: headers, params: JSON.generate({item: item_params})
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(404)
+        expect(Item.last.name).to eq(item.name)
+      end
     end
   end
 
