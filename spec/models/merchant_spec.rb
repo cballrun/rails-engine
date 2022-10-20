@@ -16,9 +16,11 @@ RSpec.describe Merchant, type: :model do
       m3 = create(:merchant, name: "Bubbles")
       m4 = create(:merchant, name: "Ring World")
       m5 = create(:merchant, name: "Turing School")
+      m6 = create(:merchant, name: "Ring Yorld")
+      m6 = create(:merchant, name: "Ring Zorld")
 
       
-      expect(Merchant.find_one("ring")).to eq("Ring World")
+      expect(Merchant.find_one("ring")).to eq(m4)
     end
   end
 
