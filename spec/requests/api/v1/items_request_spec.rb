@@ -115,4 +115,14 @@ describe "Items API" do
     expect(item.name).to eq("Plumbus")
   end
 
+  it 'can find all items in a search by name' do
+    i1 = create(:item, name: "Titanium Ring")
+    i2 = create(:item, name: "Ring Pop")
+    i3 = create(:item, name: "Suffering")
+    i4 = create(:item, name: "Cheese")
+    i5 = create(:item, name: "Goldfish")
+
+    get "/api/v1/items/find_all?name=ring"
+  end
+
 end
