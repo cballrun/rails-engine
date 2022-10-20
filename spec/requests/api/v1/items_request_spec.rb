@@ -139,7 +139,16 @@ describe "Items API" do
       expect(item[:attributes][:unit_price]).to be_a(Float)
       expect(item[:attributes][:merchant_id]).to eq(merch.id)
     end
+  end
 
+  it 'can find items in a search equal to or below a minimum price' do
+    i1 = create(:item, name: "Titanium Ring", unit_price: 51.0)
+    i2 = create(:item, name: "Ring Pop", unit_price: 50.55)
+    i3 = create(:item, name: "Suffering", unit_price: 48.00)
+    i4 = create(:item, name: "Cheese", unit_price: 125)
+    i5 = create(:item, name: "Goldfish", unit_price: 383.45)
+
+    get "/api/v1/items/find_all?min_price=50.55"
   end
 
 end

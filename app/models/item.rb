@@ -9,4 +9,12 @@ class Item < ApplicationRecord
   def self.find_all_by_name(query)
     where("name ILIKE ?", "%#{query}%")
   end
+
+  def self.find_by_min_price(minprice)
+    where("unit_price <= ?", minprice)
+  end
+
+  def self.find_by_max_price(maxprice)
+    where("unit_price >= ?", maxprice)
+  end
 end
