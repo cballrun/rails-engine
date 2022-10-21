@@ -83,6 +83,26 @@ describe "Merchants API" do
       expect(merchant[:id].to_i).to eq(m4.id)
       expect(merchant[:attributes][:name]).to eq("Ring World")
     end
+
+    context "param doesnt match anything" do
+      it 'returns an object' do
+        m1 = create(:merchant, name: "Randy")
+        m2 = create(:merchant, name: "Julian")
+        m3 = create(:merchant, name: "Bubbles")
+        m4 = create(:merchant, name: "Ring World")
+        m5 = create(:merchant, name: "Turing School")
+        m6 = create(:merchant, name: "Ring Yorld")
+        m7 = create(:merchant, name: "Ring Zorld")
+        
+        get "/api/v1/merchants/find?name=sadfdfdsa"
+
+        expect(response).to be_successful
+        
+        merchant_data = JSON.parse(response.body, symbolize_names: true)
+
+        expect(merchant_data[:data]).to_not be(nil)
+      end
+    end
   end
 
 end
