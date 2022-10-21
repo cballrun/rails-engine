@@ -29,4 +29,15 @@ describe "Merchant Items API" do
       expect(item[:attributes][:merchant_id]).to eq(merch_1.id)
     end
   end
+
+  describe 'sad path' do
+    it 'returns a 404 error for a non existent merchant id' do
+      id = create(:merchant, id: 8).id
+
+      get "/api/v1/merchants/9/items"
+
+      expect(response).to_not be_successful
+      expect(response).to have_http_status(404)
+    end
+  end
 end
