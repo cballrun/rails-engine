@@ -154,7 +154,7 @@ describe "Items API" do
     end
   end
 
-  it 'can find items in a search equal to or below a minimum price' do
+  it 'can find items in a search equal to or below a maximum' do
     i1 = create(:item, name: "Titanium Ring", unit_price: 51.0)
     i2 = create(:item, name: "Ring Pop", unit_price: 50.55)
     i3 = create(:item, name: "Suffering", unit_price: 48.00)
